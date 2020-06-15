@@ -8,7 +8,88 @@
     noSupport: 'The browser does not support'
   }
 } </script><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="JUTSSAM" type="application/atom+xml">
-</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="false"><div class="author-info"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">Young</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">3</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">3</span></a></div></div></div><nav class="no-bg" id="nav"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">JUTSSAM</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">home</a><a class="site-page" href="/archives">archives</a><a class="site-page" href="/tags">tags</a><a class="site-page" href="/search">search</a><a class="site-page" href="/about">about</a><a class="site-page" href="/atom.xml">rss</a><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="site-info"><div id="site-title">JUTSSAM</div><div id="site-sub-title"></div></div></nav><div id="content-outer"><div class="layout" id="content-inner"><div class="recent-post-item article-container"><a class="article-title" href="/2020/06/06/never-pay-for-the-live/">妈妈再也不用担心我付费看直播了</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-06-05</time><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/andriod/">andriod</a></span><div class="content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>* 本文只用于技术交流，请勿用于非法活动。</p>
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="false"><div class="author-info"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">Young</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">5</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">4</span></a></div></div></div><nav class="no-bg" id="nav"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">JUTSSAM</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">home</a><a class="site-page" href="/archives">archives</a><a class="site-page" href="/tags">tags</a><a class="site-page" href="/search">search</a><a class="site-page" href="/about">about</a><a class="site-page" href="/atom.xml">rss</a><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="site-info"><div id="site-title">JUTSSAM</div><div id="site-sub-title"></div></div></nav><div id="content-outer"><div class="layout" id="content-inner"><div class="recent-post-item article-container"><a class="article-title" href="/2020/06/15/picacomic/">复制忍术！嗶咔漫画！</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-06-15</time><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/android/">android</a></span><div class="content"><h2 id="拿到PicACG的数据"><a href="#拿到PicACG的数据" class="headerlink" title="拿到PicACG的数据"></a>拿到PicACG的数据</h2><p>两个思路：</p>
+<ol>
+<li>逆向出签名算法，编写爬虫爬取数据</li>
+<li>使用模拟器录制动作，记录下抓包信息</li>
+</ol>
+<h2 id="手头的工具"><a href="#手头的工具" class="headerlink" title="手头的工具"></a>手头的工具</h2><ul>
+<li>frida</li>
+<li>objection</li>
+</ul>
+<h2 id="先读题"><a href="#先读题" class="headerlink" title="先读题"></a>先读题</h2><p>分析dex文件，得到几个和签名计算相关的函数：</p>
+<table>
+<thead>
+<tr>
+<th align="center">功能</th>
+<th align="center">函数</th>
+<th>作用</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">获取签名key</td>
+<td align="center">com.picacomic.fregata.MyApplication.getStringSigFromNative()</td>
+<td>返回常量 <del>d}$Q7$eIni=V)9\\RK/P.RM4;9[7|@/CA}b</del>OW!3?EV`:&lt;&gt;M7pddUBL5n|0/*Cn</td>
+<td>native</td>
+</tr>
+<tr>
+<td align="center">计算请求哈希值</td>
+<td align="center">com.picacomic.fregata.MyApplication. getStringConFromNative(String[] paramArrayOfString);</td>
+<td>根据请求内容获取哈希值</td>
+<td>native</td>
+</tr>
+<tr>
+<td align="center">计算sign</td>
+<td align="center">package com.picacomic.fregata.utils.d.C(String paramString1, String paramString2)</td>
+<td>根据请求的哈希值之s1，和签名key s2（上面这个函数的返回值），计算签名</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">计算sign</td>
+<td align="center">com.picacomic.fregata.MyApplication.c(String[])</td>
+<td>根据请求（数据）计算得到签名</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>使用请求header中的参数和固定的key值，计算得到签名。</p>
+<p>hook加密函数com.picacomic.fregata.MyApplication.c，实例化对象，调用函数。</p>
+<p>native函数的参数读取很简单，修改参数对于写爬虫的意义也不大。所以最好的思路还是用frida的rpc功能，调用hook到的函数，然后封装成本地函数来调用。</p>
+<p>二级指针在编写js时，指定参数类型，pointer不通过。</p>
+<p>注入无参函数会出现access violation accessing。</p>
+<h2 id="REFERENCE"><a href="#REFERENCE" class="headerlink" title="REFERENCE"></a>REFERENCE</h2><p><a href="https://www.anquanke.com/post/id/197657#h3-7" target="_blank" rel="noopener">实用FRIDA进阶：内存漫游、hook anywhere、抓包</a>(frida和objection的用法)</p>
+<p><a href="https://bbs.pediy.com/thread-252236.htm" target="_blank" rel="noopener">基于 Frida 和 RPC，从 Python 中直接调用 iOS 的 Native 方法</a>(rpc的用法)</p>
+<p><a href="https://kevins.pro/recoding_use_frida.html" target="_blank" rel="noopener">Frida使用过程记录</a>(native参数可用类型)</p>
+<p><a href="http://blog.nsfocus.net/communication-data-decryption-based-on-frida/" target="_blank" rel="noopener">基于Frida进行通信数据“解密”</a>(学习思路)</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/06/14/bypass-EasyProtector/">尝试过EasyProtector模拟器检测</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-06-13</time><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/andriod/">andriod</a></span><div class="content"><h2 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h2><p>在分析一个新的APP的时候，惯例使用夜神模拟器，但运行时提示“该APP不能在模拟器中打开”。分析dex文件之后发现使用了一个叫“<a href="https://github.com/lamster2018/EasyProtector" target="_blank" rel="noopener">com.lahm.library</a>”的库来检测运行环境。</p>
+<h2 id="找到一款合适的模拟器"><a href="#找到一款合适的模拟器" class="headerlink" title="找到一款合适的模拟器"></a>找到一款合适的模拟器</h2><p>经过一番搜索没有找到其他人的分析记录，结果在项目的issue找到了突破口：</p>
+<p><img src="C:%5CUsers%5Cyang%5CDocuments%5Cnatural_language_process%5Cimages%5Cimage-20200613180400065.png" alt="image-20200613180400065"></p>
+<p>安装在蓝叠模拟器( <a href="https://www.bluestacks.cn/" target="_blank" rel="noopener">https://www.bluestacks.cn/</a> )中，运行发现确实没有提示，可以愉快的玩耍了。</p>
+<h2 id="抓包分析"><a href="#抓包分析" class="headerlink" title="抓包分析"></a>抓包分析</h2><h3 id="设置代理"><a href="#设置代理" class="headerlink" title="设置代理"></a>设置代理</h3><p>蓝叠模拟器把网络设置藏了起来，不能直接设置代理抓包，但是仍然留着代理的程序和adb。</p>
+<p>这里有两种方法进行代理设置：</p>
+<ol>
+<li>使用proxifer给HD-player.exe设置代理</li>
+<li>使用蓝叠提供的程序设置代理</li>
+</ol>
+<p>这里推荐使用第二种：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HD-ConfigHttpProxy.exe set [host] [port] // 设置代理</span><br><span class="line">HD-ConfigHttpProxy.exe reset // 复位</span><br></pre></td></tr></table></figure>
+
+<p>代理设置完成。</p>
+<h3 id="安装证书"><a href="#安装证书" class="headerlink" title="安装证书"></a>安装证书</h3><p>两种安装charles证书失败。</p>
+<ol>
+<li>访问chls.pro/ssl下载运行安装</li>
+<li>使用openssl计算md5并复制到system/etc/security/cacerts文件夹中</li>
+</ol>
+<p>在安装证书的时候需要root权限，大陆版的蓝叠模拟器不具有root功能，并且网上没有较好的root方案，使用国际版的BlueStacks和BStweaker4，结果发现对于4.80.1060版本的模拟器，仍然会识别为模拟器，下一步尝试注入修改判断函数的返回值。</p>
+<h2 id="安卓APP防护"><a href="#安卓APP防护" class="headerlink" title="安卓APP防护"></a>安卓APP防护</h2><ol>
+<li>加壳：源码虚拟化加密</li>
+<li>通信数据加密：key的混淆函数写在so里</li>
+<li>接口反爬：验证ssl证书(证书绑定)</li>
+</ol>
+<h2 id="REFERENCE"><a href="#REFERENCE" class="headerlink" title="REFERENCE"></a>REFERENCE</h2><p> <a href="https://sangams.com.np/how-to-root-bluestacks-latest-version/" target="_blank" rel="noopener">https://sangams.com.np/how-to-root-bluestacks-latest-version/</a> </p>
+<p> <a href="https://drive.google.com/drive/folders/0B1ef6n6F8HSZdzhaZnVqeU1vd2s" target="_blank" rel="noopener">https://drive.google.com/drive/folders/0B1ef6n6F8HSZdzhaZnVqeU1vd2s</a> </p>
+<p> <a href="https://bstweaker.tk/bluestacks-all-download" target="_blank" rel="noopener">https://bstweaker.tk/bluestacks-all-download</a> </p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/06/06/never-pay-for-the-live/">妈妈再也不用担心我付费看直播了</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-06-05</time><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/andriod/">andriod</a></span><div class="content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>* 本文只用于技术交流，请勿用于非法活动。</p>
 <p>涉及的内容包含安卓逆向、安卓内存注入和封包拦截修改。</p>
 <h1 id="事情的起源"><a href="#事情的起源" class="headerlink" title="事情的起源"></a>事情的起源</h1><p>最近对移动端的通信比较感兴趣，于是遇到一个陌生的APP习惯性地丢到模拟器上抓包看看。同类APP一般都是明文数据传输，因为是直播APP，它的推流地址容易暴露被其他的人直接利用。让我惊喜的是这个通信数据的data字段是加密的，这引起了我的兴趣。</p>
 <p>数据格式如下：</p>
